@@ -1,0 +1,4 @@
+when you generate a number in the desired range, output that number immediately.   
+If the number is out of the desired range, reject it and re-sample again. As each   
+number in the desired range has the same probability of being chosen, a uniform   
+distribution is produced.
