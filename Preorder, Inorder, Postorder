@@ -1,0 +1,57 @@
+#general   
+
+pre-order: root, (left), (right)  
+ in-order: (left), root, (right)  
+postorder: (left), (right), root
+
+========================  
+For pre-order and in-order:  
+```
+def buildTree(self, preorder, inorder):
+    if not preorder or not inorder:
+        return None
+
+    root = TreeNode(preorder.pop(0))
+    index = inorder.index(root.val)
+
+    root.left = self.buildTree(preorder,inorder[:index])
+    root.right = self.buildTree(preorder,inorder[index+1:])
+
+    return root
+```
+
+========================  
+For in-order and post-order:  
+```
+def buildTree(self, inorder, postorder):
+    if not inorder or not postorder:
+        return None
+
+    root = TreeNode(postorder.pop())
+    index = inorder.index(root.val)
+
+    root.right = self.buildTree(inorder[index+1:], postorder)
+    root.left =  self.buildTree(inorder[:index], postorder)
+
+    return root
+```
+
+========================  
+For pre-order and post-order:  
+```
+def constructFromPrePost(self, pre, post):
+
+    def build(i, j, n):
+        if n <= 0: return None
+        root = TreeNode(pre[i])
+        if n == 1: return root
+
+        k = j
+        while post[k] != pre[i+1]:
+            k += 1
+        lenght = k - j + 1
+        root.left = build(i+1, j, lenght)
+        root.right = build(i+lenght+1, k+1, n-lenght-1)
+        return root
+    return build(0, 0, len(pre))
+```
